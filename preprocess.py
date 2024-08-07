@@ -74,6 +74,10 @@ def convert_instance_to_idx_seq(word_insts, word2idx):
 
 def main():
 
+    """
+    python preprocess.py -train_src ./data/cleaned.train.diff -train_tag ./data/cleaned.train.msg -valid_src ./data/cleaned.valid.diff -valid_tag ./data/cleaned.valid.msg -save_data ./exp/vocab/vocab
+    """
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-train_src',required=True)
     parser.add_argument('-train_tag',required=True)

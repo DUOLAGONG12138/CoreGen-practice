@@ -141,7 +141,9 @@ def preprocess_for_pretrain(lines, mask_rate, in_statement_pred):
 
     return source_list, target_list
 
-
+"""
+python pretrain.py -train_src data/cleaned.train.diff -valid_src data/cleaned.valid.diff -save_data vocab/pretrain_vocab
+"""
 def main():
 
     parser = argparse.ArgumentParser()
@@ -152,7 +154,7 @@ def main():
     parser.add_argument('-mask_rate',type=float, default=0.3)
     parser.add_argument('-max_len','--max_word_seq_len',type=int, default=100)
     parser.add_argument('-min_word_count',type=int,default=5)
-    
+    parser.add_argument('-share_vocab', action='store_true')
     parser.add_argument('-keep_case',action='store_true')
     parser.add_argument('-in_statement_pred', type= bool, default=False)
 

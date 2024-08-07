@@ -14,7 +14,7 @@ def set_seed(seed):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-data', required=True)
+    parser.add_argument('-data', required=True) # exp/vocab/pretrain_vocab
     parser.add_argument('-epoch', type=int,default=100)
     parser.add_argument('-batch_size',type=int, default=64)
     parser.add_argument('-seed',type=int,default=30)
@@ -32,7 +32,10 @@ def main():
     """lodaing dataset"""
     data = torch.load(opt.data)
     print(data)
-    opt.max_token_seq_len = data['settings'].max_token_seq_len
+    opt.max_token_seq_len = data['settings'].max_token_seq_len #同步data信息中setting到opt实例中
+    training_data, vaild_data =
+
+    
 
 if __name__ == "__main__":
     main()
