@@ -35,7 +35,7 @@ def get_attn_key_pad_mask(seq_k ,seq_q):
     return padding_mask
 
 def get_subsequent_mask(seq):
-    sz_b, len_s = seq.size():
+    sz_b, len_s = seq.size()
     subsequent_mask = torch.triu(
         torch.ones((len_s, len_s), device=seq.device, dtype=torch.uint8), diagonal=1
     )
@@ -175,7 +175,7 @@ class Transformer(nn.Module):
         if emb_src_tag_weight_sharing:
             # 共享源词嵌入和目标词嵌入之间的权重矩阵
             assert n_src_vocab == n_tag_vocab, \
-            "要共享单词嵌入表，src/tgt 的词汇量必须相同"
+            "要共享单词嵌入表, src/tgt 的词汇量必须相同"
             self.encoder.src_word_emb.weight = self.decoder.tgt_word_emb.weight
 
         def forward(self, src_seq, src_pos, tag_seq, tag_pos):
