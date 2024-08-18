@@ -5,7 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-           "name": "Python: pretrain.py",
+            "name": "Python train.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "train.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-data",
+                "./exp/vocab/pretrain_vocab"
+            ]
+        },
+        {
+            "name": "Python: pretrain.py",
             "type": "debugpy",
             "request": "launch",
             "program": "pretrain.py",
@@ -39,6 +50,6 @@
                 "-save_data",
                 "./exp/vocab/vocab",
             ]
-        }
+        },
     ]
 }

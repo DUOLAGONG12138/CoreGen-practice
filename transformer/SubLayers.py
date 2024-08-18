@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from transformer.Modules import ScaleDotProductAttention
 
-class MultiHeadAttention(nn.Moudle):
+class MultiHeadAttention(nn.Module):
     def __init__(self, n_head, d_model, d_k, d_v, dropout=0.1):
         super().__init__()
         self.n_head = n_head
@@ -49,19 +49,19 @@ class MultiHeadAttention(nn.Moudle):
 
         return output, self.attn
     
-    class PostionwiseFeedForward(nn.Module):
-        def __init__(self, d_in, d_hid, dropout=0.1):
-            super().__init__()
-            self.w_1 = nn.Conv1d(d_in, d_hid, 1)
-            self.w_2 = nn.Conv1d(d_hid, d_in, 1)
-            self.layer_norm = nn.LayerNorm(d_in)
-            self.dropout = nn.Dropout(dropout)
+class PostionwiseFeedForward(nn.Module):
+    def __init__(self, d_in, d_hid, dropout=0.1):
+        super().__init__()
+        self.w_1 = nn.Conv1d(d_in, d_hid, 1)
+        self.w_2 = nn.Conv1d(d_hid, d_in, 1)
+        self.layer_norm = nn.LayerNorm(d_in)
+        self.dropout = nn.Dropout(dropout)
 
-        def forward(self, x):
-            residual = x
-            output = x.transpose(1,2)
-            output = self.w_2(F.relu(self.w_1(output)))
-            output = output.transpose(1,2)
-            output = self.dropout(output)
-            output = self.layer_norm(output + residual)
-            return output
+    def forward(self, x):
+        residual = x
+        output = x.transpose(1,2)
+        output = self.w_2(F.relu(self.w_1(output)))
+        output = output.transpose(1,2)
+        output = self.dropout(output)
+        output = self.layer_norm(output + residual)
+        return output

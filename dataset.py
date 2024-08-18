@@ -2,6 +2,21 @@ import torch
 import transformer.Constants as Constants
 import numpy as np
 
+def paried_collate_fn(insts):# 将多个样本以list的形式输入后整理成每个样本长度都相等的数据，将不满最大序列长度的补全
+        
+        max_len = max(len(inst) for inst in insts)
+        batch_seq = np.array([
+            inst + [Constants.PAD]*( max_len - len(inst))  for inst in insts
+        ])
+
+        batch_pos = np.array([
+            [pos_i+1 if w_i != Constants.PAD else 0
+             for pos_i, w_i in enumerate(inst)]for inst in batch_seq
+        ])
+
+        return batch_seq, batch_pos
+
+
 class TranslationDataset(torch.utils.data.Dataset):
     """
     TranslationDataset(
@@ -25,20 +40,7 @@ class TranslationDataset(torch.utils.data.Dataset):
         self._tag_idx2word = tag_idx2word
         self._tag_insts = tag_insts
 
-    def paried_collate_fn(insts):# 将多个样本以list的形式输入后整理成每个样本长度都相等的数据，将不满最大序列长度的补全
-        
-        max_len = max(len(inst) for inst in insts)
-        batch_seq = np.array([
-            inst + [Constants.PAD]*( max_len - len(inst))  for inst in insts
-        ])
-
-        batch_pos = np.array([
-            [pos_i+1 if w_i != Constants.PAD else 0
-             for pos_i, w_i in enumerate(inst)]for inst in batch_seq
-        ])
-
-        return batch_seq, batch_pos
-
+    
     @property
     def n_insts(self):
         return len(self.src_insts)
